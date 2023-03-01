@@ -1,3 +1,7 @@
+# Projeto de captura de tela e extração de texto
+
+O projeto tem o intuito de demostrar o uso das libs `html2canvas` e `Tesseract.js` para a captura de tela, gerar uma imagem e partir da mesma extrair o texto se houver.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
