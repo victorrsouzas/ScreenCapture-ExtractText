@@ -5,6 +5,9 @@ import ScreenCapture from "../../Screenshot/ScreenCapture.tsx";
 import Tesseract from 'tesseract.js';
 import Image from "../../assets/Imagem-de-post_4-metodologias-ativas.jpg";
 import Invoice from "../../Invoice/index.tsx";
+import { PDFViewer } from '@react-pdf/renderer';
+import InvoicePDF from "../../PDF/Invoice"
+import invoice from "../../PDF/data/invoice"
 
 
 export interface IHomeProps { }
@@ -22,12 +25,12 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
       'eng',
     ).then(({ data: { text } }) => {
       console.log("Texto", text);
-      if(text){
+      if (text) {
         setScreenCaptureText(text);
-      } else{
+      } else {
         setScreenCaptureText("No text was detected! Edit the image and drop it here to retry!")
       }
-      
+
     })
   };
 
@@ -37,11 +40,16 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
         {({ onStartCapture }) => (
           <>
             <Grid container direction="row">
-              <Grid item xs={6} justifyContent="center">
+              <Grid item xs={4} justifyContent="center">
                 <Invoice />
               </Grid>
-              <Grid item xs={6} justifyContent="center">
+              <Grid item xs={4} justifyContent="center">
                 <img src={Image} alt='Teste' width="400" height="341" />
+              </Grid>
+              <Grid item xs={4} justifyContent="center">
+                <PDFViewer width="500" height="200" >
+                  <InvoicePDF invoice={invoice} />
+                </PDFViewer>
               </Grid>
             </Grid>
             <Grid container spacing={2} sx={{ display: "flex" }}>

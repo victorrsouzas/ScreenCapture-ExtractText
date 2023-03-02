@@ -1,11 +1,10 @@
-import React, { Component, CSSProperties, ReactNode } from 'react';
+import React, { Component, CSSProperties } from 'react';
 import html2canvas from 'html2canvas';
 import './styles.scss';
 
 interface Props {
   onStartCapture: () => null;
   onEndCapture: (url: string) => null;
-  children?: ReactNode;
 }
 
 interface State {
