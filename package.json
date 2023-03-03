@@ -29,6 +29,8 @@
     "scss": "^0.2.4",
     "styled-components": "^5.3.6",
     "tesseract.js": "^4.0.2",
+    "use-react-screenshot": "^3.0.0",
+    "use-screenshot-hook": "^1.0.2",
     "web-vitals": "^2.1.4",
     "webshooter": "^0.0.5",
     "worker-loader": "^3.0.8"
