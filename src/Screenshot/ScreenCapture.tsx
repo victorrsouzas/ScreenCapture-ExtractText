@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties } from 'react';
+import React, { Component, CSSProperties, MouseEvent, Fragment } from 'react';
 import html2canvas from 'html2canvas';
 import './styles.scss';
 
@@ -55,7 +55,6 @@ class ScreenCapture extends Component<Props, State> {
       window.innerHeight ||
       document.documentElement.clientHeight ||
       document.body.clientHeight;
-
     this.setState({
       windowWidth,
       windowHeight,
@@ -66,12 +65,11 @@ class ScreenCapture extends Component<Props, State> {
     this.handleWindowResize();
     window.addEventListener('resize', this.handleWindowResize);
   };
-
   componentWillUnmount = () => {
     window.removeEventListener('resize', this.handleWindowResize);
   };
-
   handStartCapture = () => this.setState({ on: true });
+
 
   handleMouseMove = (e: any) => {
     const {
@@ -105,7 +103,6 @@ class ScreenCapture extends Component<Props, State> {
         cropWidth = endX - startX;
         cropHeigth = endY - startY;
       }
-
       if (isStartTopRight) {
         newBorderWidth = `${startY}px ${windowWidth - startX}px ${windowHeight -
           endY}px ${endX}px`;
@@ -121,7 +118,6 @@ class ScreenCapture extends Component<Props, State> {
         cropHeigth = startY - endY;
         cropPositionTop = endY;
       }
-
       if (isStartBottomRight) {
         newBorderWidth = `${endY}px ${windowWidth - startX}px ${windowHeight -
           startY}px ${endX}px`;
@@ -132,8 +128,8 @@ class ScreenCapture extends Component<Props, State> {
       }
     }
 
-    cropWidth *= window.devicePixelRatio;
-    cropHeigth *= window.devicePixelRatio;
+    //cropWidth *= window.devicePixelRatio;
+    //cropHeigth *= window.devicePixelRatio;
 
     this.setState({
       crossHairsTop: e.clientY,
@@ -149,7 +145,6 @@ class ScreenCapture extends Component<Props, State> {
   handleMouseDown = (e: any) => {
     const startX = e.clientX;
     const startY = e.clientY;
-
     this.setState(prevState => ({
       startX,
       startY,
@@ -183,20 +178,25 @@ class ScreenCapture extends Component<Props, State> {
         const croppedCanvas = document.createElement('canvas');
         const croppedCanvasContext = croppedCanvas.getContext('2d');
 
-        croppedCanvas.width = cropWidth;
-        croppedCanvas.height = cropHeigth;
+        const scaleCropPositionLeft = cropPositionLeft * window.devicePixelRatio;
+        const scaleCropPositionTop = cropPositionTop * window.devicePixelRatio;
+        const scaleCropWidth = cropWidth * window.devicePixelRatio;
+        const scaleCropHeigth = cropHeigth * window.devicePixelRatio;
+
+        croppedCanvas.width = scaleCropWidth;
+        croppedCanvas.height = scaleCropHeigth;
 
         if (croppedCanvasContext) {
           croppedCanvasContext.drawImage(
             canvas,
-            cropPositionLeft,
-            cropPositionTop,
-            cropWidth,
-            cropHeigth,
+            scaleCropPositionLeft,
+            scaleCropPositionTop,
+            scaleCropWidth,
+            scaleCropHeigth,
             0,
             0,
-            cropWidth,
-            cropHeigth,
+            scaleCropWidth,
+            scaleCropHeigth,
           );
         }
 
@@ -217,14 +217,11 @@ class ScreenCapture extends Component<Props, State> {
     const props = {
       onStartCapture: this.handStartCapture
     };
-
     if (typeof children === 'function') {
       return children(props);
     }
-
     return children;
   };
-
   render() {
     const {
       on,
@@ -237,7 +234,6 @@ class ScreenCapture extends Component<Props, State> {
     if (!on) {
       return this.renderChild();
     }
-
     return (
       <div
         onMouseMove={this.handleMouseMove}

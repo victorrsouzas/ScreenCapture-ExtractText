@@ -23,7 +23,7 @@ const Toolkit: React.FunctionComponent<ISpeedDialProps> = (props) => {
       <Box sx={{ height: 100, transform: 'translateZ(0px)', flexGrow: 1 }}>
         <SpeedDial
           ariaLabel="SpeedDial controlled open example"
-          sx={{ position: 'absolute', bottom: 0, right: 16 }}
+          sx={{ position: 'absolute', display: 'flex', bottom: 0, right: 16, cursor:'pointer' }}
           icon={<AccessibilityNewOutlinedIcon />}
           direction="left"
           onClose={handleClose}
