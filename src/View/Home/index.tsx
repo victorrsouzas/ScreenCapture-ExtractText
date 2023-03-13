@@ -9,6 +9,8 @@ import invoice from "../../PDF/data/invoice"
 //import { useScreenshot } from "use-react-screenshot";
 import { useScreenshot } from "use-screenshot-hook";
 import "./styles.css";
+import File from "../../assets/download.pdf"
+import domtoimage from '../../Screenshot3/dom-to-image';
 
 
 
@@ -20,8 +22,7 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
   const [screenCaptureText, setScreenCaptureText] = React.useState('');
   const ref = useRef();
   const [width, setWidth] = React.useState(300);
-  const { image, takeScreenshot, isLoading, clear } = useScreenshot();
-
+  const { image, takeScreenshot } = useScreenshot();
 
   const handleScreenCapture = screenCapture => {
     setScreenCapture(screenCapture);
@@ -46,11 +47,12 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
         {({ onStartCapture }) => (
           <>
             <div className={["container", "container-unlock"].join(" ")}>
-              <div className="base">                
+              <div className="base">
                 <div className="row">
-                  <PDFViewer width="1000" height="500" >
-                    <InvoicePDF invoice={invoice} />
-                  </PDFViewer>
+                  <iframe src={File} id="frame" allow="display-capture" frameborder="0" height="800" width="800">
+                  </iframe>
+
+
                 </div>
                 <p>Takes screenshot for react components</p>
                 <button className={["btn"].join(" ")} onClick={() => takeScreenshot()}>

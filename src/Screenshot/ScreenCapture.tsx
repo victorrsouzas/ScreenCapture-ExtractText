@@ -128,8 +128,8 @@ class ScreenCapture extends Component<Props, State> {
       }
     }
 
-    //cropWidth *= window.devicePixelRatio;
-    //cropHeigth *= window.devicePixelRatio;
+    //cropWidth *= window.innerWidth;
+    //cropHeigth *= window.innerHeight;
 
     this.setState({
       crossHairsTop: e.clientY,
@@ -172,7 +172,8 @@ class ScreenCapture extends Component<Props, State> {
       cropHeigth,
     } = this.state;
     const body = document.querySelector('body');
-
+    let target_container = document.getElementById("frame");
+  
     if (body) {
       html2canvas(body).then(canvas => {
         const croppedCanvas = document.createElement('canvas');
