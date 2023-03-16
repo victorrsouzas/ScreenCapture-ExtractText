@@ -77,6 +77,17 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
     }
   }
 
+  const CORSSolve = (url) => {
+    const xhttp = new XMLHttpRequest()
+    xhttp.onreadystatechange = function(){
+      if(this.readyState === 4 && this.status === 200){
+        document.getElementById('data').innerText = xhttp.responseText
+      } 
+    };
+    xhttp.open("GET", url, true)
+    xhttp.send()
+  }
+
   const modalBody = (file) => (
     <div
       style={{
@@ -143,19 +154,35 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
         {({ onStartCapture }) => (
 
           <>
+            {console.log("Teste", CORSSolve("http://marte.dpi.inpe.br/col/dpi.inpe.br/sbsr@80/2006/11.15.22.53/doc/5691-5698.pdf"))}
             <div className="container">
-              <form>
+              {/*  <form>
                 <label><h5>Upload PDF</h5></label>
                 <input type='file' className="form-control"
                   onChange={handleFile}></input>
                 {pdfError && <span className='text-danger'>{pdfError}</span>}
-              </form>
+              </form> */}     
+              
               <h5>View PDF</h5>
+              <iframe
+                width="800px"
+                height="800px"
+                src="http://marte.dpi.inpe.br/col/dpi.inpe.br/sbsr@80/2006/11.15.22.53/doc/5691-5698.pdf"
+                frameBorder="0"
+                title="Iframe de origem diferente"
+              ></iframe>
+              <button               
+                onClick={() =>
+                  setShown(true)
+                }
+              >
+                Traduzir em Libras
+              </button>
               <div className="viewer">
-                {pdfFile && shown && (
+                {shown && (
                   <>
                     <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.3.122/build/pdf.worker.min.js">
-                      {ReactDOM.createPortal(modalBody(pdfFile), document.body)}
+                      {ReactDOM.createPortal(modalBody("https://www.bresserpereira.org.br/terceiros/2019/outubro/19.10-Neofascismo-e-Bolsonaro.pdf"), document.body)}
                     </Worker>
                     <p>Imagem: </p>
                     <img src={screenCapture} alt='react-screen-capture' />
